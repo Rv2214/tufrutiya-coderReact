@@ -5,11 +5,25 @@ import ProductsList from "./components/CardProduct";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
-    axios("http://localhost:8080/api/products")
+    fetchProducts(currentPage);
+  }, [currentPage]);
+
+  const fetchProducts = (page) => {
+    axios(`http://localhost:8080/api/products?page=${page}`)
       .then((res) => setProducts(res.data.response.docs))
       .catch((err) => console.log(err));
-  }, []);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((nextPage) => nextPage + 1);
+  };
 
   return (
     <>
@@ -75,11 +89,10 @@ function App() {
           </div>
         </div>
       </nav>
-
       <ProductsList
         products={products}
-/*         prevPage={prevPage}
-        nextPage={nextPage} */
+        prevPage={handlePrevPage}
+        nextPage={handleNextPage}
       />
       <footer className="bg-warning w-100">
         <p className="text-light m-2 text-center fw-bolder fs-4">
