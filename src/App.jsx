@@ -1,14 +1,28 @@
-import { useState, useEffect } from "react";
-import "./App.css";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import axios from "axios";
 import ProductsList from "./components/CardProduct";
+import Navbar from "./components/navbar";
+import Login from "./components/Login";
+import Register from "./components/register";
+import Orders from "./components/Orders";
+import Form from "./components/Form";
+import ProductDetail from "./components/ProductDetail";
+import Cart from "./components/Cart";
+import VerifiedCode from "./components/verifiedCode";
+import { CartProvider } from "./components/CartContext";
+import Footer from "./components/Footer";
+import UserProfile from "./components/userProfile";
+import PasswordUpdateForm from "./components/PasswordUpdateForm";
 
 function App() {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     fetchProducts(currentPage);
+    fetchUser();
   }, [currentPage]);
 
   const fetchProducts = (page) => {
@@ -25,80 +39,69 @@ function App() {
     setCurrentPage((nextPage) => nextPage + 1);
   };
 
+  const fetchUser = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/sessions/isauth",
+        {
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.user);
+      } else {
+        console.log("Failed to fetch user");
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+  };
+
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="http://localhost:8080/">
-            TU FRUTI YA!
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
-              <a
-                className="nav-link active"
-                aria-current="page"
-                href="http://localhost:8080/"
-              >
-                Home
-              </a>
-              <a
-                className="nav-link"
-                href="http://localhost:8080/products/real"
-              >
-                Real
-              </a>
-              <a className="nav-link" href="http://localhost:8080/products">
-                Productos
-              </a>
-              <a
-                className="nav-link"
-                href="http://localhost:8080/products/form"
-              >
-                Formulario
-              </a>
-              <a className="nav-link" href="http://localhost:8080/orders">
-                Ordenes
-              </a>
-              <a
-                className="nav-link"
-                href="http://localhost:8080/sessions/register"
-              >
-                Registro
-              </a>
-              <a
-                className="nav-link"
-                href="http://localhost:8080/sessions/login"
-              >
-                Login
-              </a>
-              <span className="btn btn-warning fs-8" id="logout">
-                Signout
-              </span>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <ProductsList
-        products={products}
-        prevPage={handlePrevPage}
-        nextPage={handleNextPage}
-      />
-      <footer className="bg-warning w-100">
-        <p className="text-light m-2 text-center fw-bolder fs-4">
-          TU FRUTI YA!
-        </p>
-      </footer>
+      <BrowserRouter>
+        <CartProvider>
+          <Navbar user={user} setUser={setUser} />
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <ProductsList
+                  products={products}
+                  prevPage={handlePrevPage}
+                  nextPage={handleNextPage}
+                />
+              }
+            />
+            <Route
+              path="/product/:id"
+              element={<ProductDetail products={products} />}
+            />
+            <Route exact path="/login" element={<Login setUser={setUser} />} />
+            <Route exact path="/register" element={<Register />} />
+            <Route exact path="/verifiedcode" element={<VerifiedCode />} />
+            <Route exact path="/cart" element={<Cart />} />
+            <Route exact path="/form" element={<Form />} />
+            {user && (
+              <Route
+                exact
+                path="/userprofile"
+                element={<UserProfile userId={user._id} />}
+              />
+            )}
+            {user && (
+              <Route
+                exact
+                path={`/passwordupdate/:token`}
+                element={<PasswordUpdateForm />}
+              />
+            )}
+          </Routes>
+        </CartProvider>
+        <Footer />
+      </BrowserRouter>
     </>
   );
 }
