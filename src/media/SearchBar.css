@@ -1,0 +1,37 @@
+.search-bar {
+    position: relative;
+    width: 200px;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 8px 28px 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    transition: width 0.3s ease-in-out;
+    font-size: 16px;
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+  }
+  
+  .search-input:focus {
+    width: 300px;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    pointer-events: none;
+    transition: right 0.3s ease-in-out; /* Transición para suavizar el movimiento */
+  }
+  
+  /* Ajuste de la posición del icono cuando el input se expande */
+  .search-bar:focus-within .search-icon {
+    right: calc(10px + 100% - 300px); /* Ajusta la posición del icono cuando el input se expande */
+  }
+  
