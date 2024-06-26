@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function Cart() {
   const {
     cartItems: contextCartItems,
@@ -20,7 +22,7 @@ function Cart() {
 
   const fetchCartItems = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/orders", {
+      const response = await fetch(`${apiUrl}/api/orders`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +48,7 @@ function Cart() {
   const handleDelete = async (orderId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/orders/${orderId}`,
+        `${apiUrl}/api/orders/${orderId}`,
         {
           method: "DELETE",
           headers: {
@@ -81,7 +83,7 @@ function Cart() {
   const handleCheckout = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/payments/checkout",
+        `${apiUrl}/api/payments/checkout`,
         {
           method: "POST",
           headers: {

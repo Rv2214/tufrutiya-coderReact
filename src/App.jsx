@@ -15,6 +15,10 @@ import Footer from "./components/Footer";
 import UserProfile from "./components/userProfile";
 import PasswordUpdateForm from "./components/PasswordUpdateForm";
 
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
+
 function App() {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,7 +30,7 @@ function App() {
   }, [currentPage]);
 
   const fetchProducts = (page) => {
-    axios(`http://localhost:8080/api/products?page=${page}`)
+    axios(`${apiUrl}/api/products?page=${page}`)
       .then((res) => setProducts(res.data.response.docs))
       .catch((err) => console.log(err));
   };
@@ -42,7 +46,7 @@ function App() {
   const fetchUser = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/sessions/isauth",
+        `${apiUrl}/api/sessions/isauth`,
         {
           credentials: "include",
         }

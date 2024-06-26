@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +26,7 @@ const Login = ({ setUser }) => {
         credentials: "include",
       };
       let response = await fetch(
-        "http://localhost:8080/api/sessions/login",
+        `${apiUrl}/api/sessions/login`,
         opts
       );
       if (response.ok) {
@@ -50,8 +52,10 @@ const Login = ({ setUser }) => {
   const fetchUser = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/sessions/isauth",
+        `${apiUrl}/api/sessions/isauth`,
         {
+          method: "POST", 
+          headers: { "Content-Type": "application/json" }, 
           credentials: "include",
         }
       );

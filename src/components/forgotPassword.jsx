@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
 
@@ -12,7 +14,7 @@ const ForgotPasswordForm = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/sessions/forgot-password",
+        `${apiUrl}/api/sessions/forgot-password`,
         {
           method: "POST",
           headers: {
