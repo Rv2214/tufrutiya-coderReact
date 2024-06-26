@@ -33,7 +33,7 @@ function Register() {
       response = await response.json();
       if (response.statusCode === 201) {
         alert("Registered!");
-        window.location.replace("/verifiedcode");
+        window.location.replace("https://tufrutiya-coder-react.vercel.app/verifiedcode");
       } else {
         alert("ERROR: " + response.message);
       }
