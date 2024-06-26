@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function VerifiedCode() {
   const [email, setEmail] = useState("");
   const [verifiedCode, setVerifiedCode] = useState("");
@@ -21,7 +23,7 @@ function VerifiedCode() {
         credentials: "include",
       };
       let response = await fetch(
-        "http://localhost:8080/api/sessions/verify-account",
+        `${apiUrl}/api/sessions/verify-account`,
         opts
       );
       response = await response.json();

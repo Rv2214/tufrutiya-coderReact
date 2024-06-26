@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const PasswordUpdateForm = () => {
   const [password, setPassword] = useState("");
   const { token } = useParams();
@@ -13,7 +15,7 @@ const PasswordUpdateForm = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/sessions/resetpassword/${token}`,
+        `${apiUrl}/api/sessions/resetpassword/${token}`,
         {
           method: "PUT",
           headers: {

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function Form() {
   const [formData, setFormData] = useState({
     title: "",
@@ -18,7 +20,7 @@ function Form() {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/products/", {
+      const response = await fetch(`${apiUrl}/api/products/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

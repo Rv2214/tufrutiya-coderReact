@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import ProductCounter from "./ProductCounter";
 import { CartContext } from "./CartContext";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function ProductDetail({ products }) {
   const { id } = useParams();
   const { addToCart } = useContext(CartContext);
@@ -22,7 +24,7 @@ function ProductDetail({ products }) {
     addToCart(product, numericQuantity);
 
     try {
-      const response = await fetch(`http://localhost:8080/api/orders/${id}`, {
+      const response = await fetch(`${apiUrl}/api/orders/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

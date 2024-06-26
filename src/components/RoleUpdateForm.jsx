@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const RoleUpdateForm = ({ userId }) => {
   const [role, setRole] = useState("");
 
@@ -12,7 +14,7 @@ const RoleUpdateForm = ({ userId }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/users/${userId}`,
+        `${apiUrl}/api/users/${userId}`,
         {
           method: "PUT", 
           headers: {

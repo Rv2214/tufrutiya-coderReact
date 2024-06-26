@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +27,7 @@ function Register() {
         credentials: "include",
       };
       let response = await fetch(
-        "http://localhost:8080/api/sessions/register",
+        `${apiUrl}/api/sessions/register`,
         opts
       );
       response = await response.json();

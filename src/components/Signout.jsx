@@ -1,5 +1,7 @@
 import React from 'react';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function Signout({ setUser }) {
   const handleSignout = async () => {
     try {
@@ -8,7 +10,7 @@ function Signout({ setUser }) {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
       };
-      let response = await fetch('http://localhost:8080/api/sessions/signout', opts);
+      let response = await fetch(`${apiUrl}/api/sessions/signout`, opts);
       response = await response.json();
       if (response.statusCode === 200) {
         alert("Session has been successfully closed.");
