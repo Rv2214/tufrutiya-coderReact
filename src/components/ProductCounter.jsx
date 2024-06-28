@@ -16,11 +16,26 @@ const ProductCounter = ({ product, addToCart }) => {
   };
 
   return (
-    <div className="product-counter">
-      <button onClick={decrement}>-</button>
-      <span>{quantity}</span>
-      <button onClick={increment}>+</button>
-      <button onClick={handleAddToCart}>Add to cart</button>
+    <div className="product-counter d-flex">
+      <button
+        className="btn btn-warning d-block mx-auto mb-2"
+        onClick={decrement}
+      >
+        -
+      </button>
+      <span className="p-2 fs-6 fw-normal">{quantity}</span>
+      <button
+        className="btn btn-warning d-block mx-auto mb-2"
+        onClick={increment}
+      >
+        +
+      </button>
+      <button
+        className="btn btn-warning d-block mx-auto mb-2"
+        onClick={handleAddToCart}
+      >
+        Add to cart
+      </button>
     </div>
   );
 };
