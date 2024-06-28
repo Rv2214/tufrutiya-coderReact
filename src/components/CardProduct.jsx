@@ -53,12 +53,15 @@ function ProductsList({ products, prevPage, nextPage }) {
               </div>
             ))}
           </div>
-          <div className="row mt-4">
+          <div className="row mt-4 btns__productconteiner">
             <div className="col d-flex justify-content-between">
               <button onClick={prevPage} className="btn btn-warning">
                 Back
               </button>
-              <button onClick={nextPage} className="btn btn-warning">
+              <button
+                onClick={nextPage}
+                className="btn btn-warning btn__products"
+              >
                 Next
               </button>
             </div>

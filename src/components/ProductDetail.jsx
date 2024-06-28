@@ -38,25 +38,29 @@ function ProductDetail({ products }) {
         console.log("Product added to cart successfully:", data);
       } else {
         const errorData = await response.json();
-        console.error(
-         "Error adding product to cart:",
-          errorData.message
-        );
+        console.error("Error adding product to cart:", errorData.message);
         alert(`Error: ${errorData.message}`);
       }
     } catch (error) {
-      console.error("There was a problem adding the product to the cart.", error);
+      console.error(
+        "There was a problem adding the product to the cart.",
+        error
+      );
       alert("Hubo un problema al añadir el producto al carrito.");
     }
   };
 
   return (
-    <div className="product-detail">
-      <h2>{product.title}</h2>
-      <img src={product.photo} alt={product.title} />
-      <p>{product.description}</p>
-      <p>Precio: ${product.price}</p>
-      <ProductCounter product={product} addToCart={handleAddToCart} />
+    <div className="d-flex justify-content-center mt-5">
+      <div className="card card__detail">
+        <h2>{product.title}</h2>
+        <img src={product.photo} alt={product.title} className="card-img-top" />
+        <div className="card-body d-flex">
+          <p>{product.description}</p>
+          <p className="p-2 fs-6">Precio: ${product.price}</p>
+          <ProductCounter product={product} addToCart={handleAddToCart} />
+        </div>
+      </div>
     </div>
   );
 }

@@ -2,10 +2,10 @@ import React from "react";
 
 function Orders({ orders, prevPage, nextPage }) {
   return (
-    <div className="container">
+    <div className="container d-flex justify-content-center mt-5">
       <h1>Orders</h1>
       {orders.map((order) => (
-        <div key={order._id} className="card mb-4">
+        <div key={order._id} className="card card__detail">
           <div className="card-body">
             <h5 className="card-title">Order Information</h5>
             <p>Order ID: {order._id}</p>

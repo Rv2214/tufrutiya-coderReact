@@ -47,16 +47,13 @@ function Cart() {
 
   const handleDelete = async (orderId) => {
     try {
-      const response = await fetch(
-        `${apiUrl}/api/orders/${orderId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/orders/${orderId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
 
       if (response.ok) {
         alert("Producto eliminado del carrito");
@@ -82,16 +79,13 @@ function Cart() {
 
   const handleCheckout = async () => {
     try {
-      const response = await fetch(
-        `${apiUrl}/api/payments/checkout`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/payments/checkout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -115,23 +109,43 @@ function Cart() {
   );
 
   return (
-    <div>
-      <h2>Cart</h2>
-      <ul>
-        {cartItems.map((item) => (
-          <li key={item._id}>
-            <div>
-              <img src={item.product_id.photo} alt={item.product_id.title} />-{" "}
-              {item.product_id.title} - {item.quantity} x $
-              {item.product_id.price}
-              <button onClick={() => handleDelete(item._id)}>Delete</button>
+    <div className="d-flex flex-column">
+      <div className="container d-flex align-items-stretch mt-5">
+        <ul>
+          {cartItems.map((item) => (
+            <div key={item._id} className="card">
+              <li>
+                <div>
+                  <img
+                    src={item.product_id.photo}
+                    alt={item.product_id.title}
+                    className="card-img-top"
+                  />
+                  -{" "}
+                  <li>
+                    {item.product_id.title} - {item.quantity} x $
+                    {item.product_id.price}
+                  </li>
+                  <button
+                    className="btn btn-warning d-block mx-auto mb-2"
+                    onClick={() => handleDelete(item._id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </li>
             </div>
-          </li>
-        ))}
-      </ul>
+          ))}
+        </ul>
+      </div>
       <p>Total: ${total}</p>
       <p>Total Quantity: {getTotalQuantity()}</p>
-      <button onClick={handleCheckout}>Proceed to Checkout</button>
+      <button
+        className="btn btn-warning mb-2 btn__checkout"
+        onClick={handleCheckout}
+      >
+        Proceed to Checkout
+      </button>
     </div>
   );
 }
